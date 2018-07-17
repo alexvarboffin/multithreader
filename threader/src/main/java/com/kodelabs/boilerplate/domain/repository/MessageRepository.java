@@ -1,8 +1,7 @@
 package com.kodelabs.boilerplate.domain.repository;
 
-public interface AdsRepository {
+public interface MessageRepository {
     String getWelcomeMessageById(int id);
 
     String getWelcomeMessage();
 }
-

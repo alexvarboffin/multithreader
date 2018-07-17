@@ -1,9 +1,9 @@
 package com.kodelabs.boilerplate.domain.repository.impl;
 
-import com.kodelabs.boilerplate.domain.repository.AdsRepository;
+import com.kodelabs.boilerplate.domain.repository.MessageRepository;
 
 public class SimpleMessageRepository
-        implements AdsRepository {
+        implements MessageRepository {
 
 
     private static SimpleMessageRepository INSTANCE;

@@ -6,7 +6,7 @@ import com.kodelabs.boilerplate.domain.executor.Executor;
 import com.kodelabs.boilerplate.domain.executor.MainThread;
 import com.kodelabs.boilerplate.domain.interactors.AdsInteractor;
 import com.kodelabs.boilerplate.domain.interactors.impl.AdsInteractorImpl;
-import com.kodelabs.boilerplate.domain.repository.AdsRepository;
+import com.kodelabs.boilerplate.domain.repository.MessageRepository;
 import com.kodelabs.boilerplate.presentation.presenters.MainPresenter;
 import com.kodelabs.boilerplate.presentation.presenters.base.AbstractPresenter;
 
@@ -20,13 +20,13 @@ public class MainPresenterImpl extends AbstractPresenter
     private static final String TAG = "@@@";
     private AdsInteractor interactor;
 
-    private final AdsRepository mRepository;
+    private final MessageRepository mRepository;
     private long startTime = System.currentTimeMillis();
     private View mView;
     private Thread mThread;
 
     public MainPresenterImpl(Executor executor, MainThread mainThread,
-                             View view, AdsRepository messageRepository) {
+                             View view, MessageRepository messageRepository) {
         super(executor, mainThread);
         mView = view;
         mRepository = messageRepository;

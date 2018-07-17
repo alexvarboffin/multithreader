@@ -4,7 +4,8 @@ import com.kodelabs.boilerplate.domain.executor.Executor;
 import com.kodelabs.boilerplate.domain.executor.MainThread;
 import com.kodelabs.boilerplate.domain.interactors.AdsInteractor;
 import com.kodelabs.boilerplate.domain.interactors.base.AbstractInteractor;
-import com.kodelabs.boilerplate.domain.repository.AdsRepository;
+
+import com.kodelabs.boilerplate.domain.repository.MessageRepository;
 import com.kodelabs.boilerplate.domain.repository.Repository;
 
 /**
@@ -15,10 +16,10 @@ import com.kodelabs.boilerplate.domain.repository.Repository;
 public class AdsInteractorImpl extends AbstractInteractor implements AdsInteractor{
 
     private final Callback mCallback;
-    private final AdsRepository mMessageRepository;
+    private final MessageRepository mMessageRepository;
 
     public AdsInteractorImpl(Executor threadExecutor, MainThread mainThread,
-                             AdsInteractor.Callback callback, AdsRepository repository) {
+                             AdsInteractor.Callback callback, MessageRepository repository) {
         super(threadExecutor, mainThread);
         this.mCallback = callback;
         this.mMessageRepository = repository;
