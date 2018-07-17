@@ -47,11 +47,11 @@ public class SimpleMessageRepository
         String msg = "Welcome, friend: " + seconds; // let's be friendly
 
         // давайте симулируем некоторые сетевые/БД лаги
-//        try {
-//            Thread.sleep(2000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         return msg;
     }

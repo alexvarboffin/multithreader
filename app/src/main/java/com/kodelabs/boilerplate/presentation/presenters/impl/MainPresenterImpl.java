@@ -5,8 +5,12 @@ import android.util.Log;
 import com.kodelabs.boilerplate.domain.executor.Executor;
 import com.kodelabs.boilerplate.domain.executor.MainThread;
 import com.kodelabs.boilerplate.domain.interactors.AdsInteractor;
+import com.kodelabs.boilerplate.domain.interactors.UserInteractor;
 import com.kodelabs.boilerplate.domain.interactors.impl.AdsInteractorImpl;
+import com.kodelabs.boilerplate.domain.interactors.impl.UserInteractorImpl;
+import com.kodelabs.boilerplate.domain.model.UserModel;
 import com.kodelabs.boilerplate.domain.repository.MessageRepository;
+import com.kodelabs.boilerplate.domain.repository.impl.UserRepository;
 import com.kodelabs.boilerplate.presentation.presenters.MainPresenter;
 import com.kodelabs.boilerplate.presentation.presenters.base.AbstractPresenter;
 
@@ -18,7 +22,9 @@ public class MainPresenterImpl extends AbstractPresenter
 
 
     private static final String TAG = "@@@";
+
     private AdsInteractor interactor;
+    private UserInteractor mUserInteractor;
 
     private final MessageRepository mRepository;
     private long startTime = System.currentTimeMillis();
@@ -35,27 +41,50 @@ public class MainPresenterImpl extends AbstractPresenter
     @Override
     public void runWork() {
 
-        interactor = new AdsInteractorImpl(
+
+        mUserInteractor = new UserInteractorImpl(
                 mExecutor,
                 mMainThread,
-                new AdsInteractor.Callback() {
-                    @Override
-                    public void onMessageRetrieved(String message) {
-                        if (mView != null) {
-                            mView.displayWelcomeMessage(message);
-                        }
-                    }
-
-                    @Override
-                    public void onRetrievalFailed(String error) {
-                        Log.i(TAG, "onRetrievalFailed: " + error);
-                    }
-                },
-                mRepository
+                new UserRepository()
         );
 
-        // запускаем interactor
-        interactor.execute();
+        mUserInteractor.getUserById((long) 77, new UserInteractor.Callback<UserModel>() {
+            @Override
+            public void onMessageRetrieved(UserModel message) {
+                if (mView != null) {
+                    mView.displayWelcomeMessage(message.toString());
+                }
+            }
+
+            @Override
+            public void onRetrievalFailed(String error) {
+
+            }
+        });
+
+        //====================================================================
+
+//        interactor = new AdsInteractorImpl(
+//                mExecutor,
+//                mMainThread,
+//                new AdsInteractor.Callback() {
+//                    @Override
+//                    public void onMessageRetrieved(String message) {
+//                        if (mView != null) {
+//                            mView.displayWelcomeMessage(message);
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onRetrievalFailed(String error) {
+//                        Log.i(TAG, "onRetrievalFailed: " + error);
+//                    }
+//                },
+//                mRepository
+//        );
+//
+//        // запускаем interactor
+//        interactor.execute();
 
         for (int i = 0; i < 100; i++) {
 
