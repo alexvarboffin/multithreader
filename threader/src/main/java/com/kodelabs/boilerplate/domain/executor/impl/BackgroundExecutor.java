@@ -10,13 +10,13 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-public class MyThreadExecutor implements Executor {
+public class BackgroundExecutor implements Executor {
 
-    private static volatile MyThreadExecutor INSTANCE;
+    private static volatile BackgroundExecutor INSTANCE;
 
-    public static MyThreadExecutor getInstance() {
+    public static BackgroundExecutor getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new MyThreadExecutor();
+            INSTANCE = new BackgroundExecutor();
         }
         return INSTANCE;
     }
@@ -26,7 +26,7 @@ public class MyThreadExecutor implements Executor {
     private static final String TAG = "@@@";
     private ExecutorService mExecutorService;
 
-    private MyThreadExecutor() {
+    private BackgroundExecutor() {
         this.mExecutorService = Executors.newFixedThreadPool(CORE_POOL_SIZE);
         Log.i(TAG, "MyThreadExecutor: pool-zize -> " + CORE_POOL_SIZE + " -> "
                 + mExecutorService.hashCode());
@@ -61,5 +61,11 @@ public class MyThreadExecutor implements Executor {
         } catch (Exception e) {
             Log.i(TAG, "execute: " + e.toString());
         }
+    }
+
+
+    @Override
+    public <T> Future<T> submit(Callable<T> runnable) {
+        return mExecutorService.submit(runnable);
     }
 }

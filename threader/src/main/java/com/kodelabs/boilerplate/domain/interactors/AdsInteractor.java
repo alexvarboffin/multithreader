@@ -4,7 +4,7 @@ import com.kodelabs.boilerplate.domain.interactors.base.Interactor;
 
 public interface AdsInteractor extends Interactor {
 
-    //Отстку в главный тред
+    //Отстyk в главный тред
     interface Callback {
         void onMessageRetrieved(String message);
 

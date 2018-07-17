@@ -4,6 +4,8 @@ import com.kodelabs.boilerplate.domain.executor.Executor;
 import com.kodelabs.boilerplate.domain.interactors.base.AbstractInteractor;
 
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -47,6 +49,11 @@ public class ThreadExecutor implements Executor {
                 interactor.onFinished();
             }
         });
+    }
+
+    @Override
+    public <T> Future<T> submit(Callable<T> runnable) {
+        return mThreadPoolExecutor.submit(runnable);
     }
 
     /**

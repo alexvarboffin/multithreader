@@ -1,15 +1,6 @@
 package com.kodelabs.boilerplate;
 
-import com.kodelabs.boilerplate.domain.executor.MainThread;
-import com.kodelabs.boilerplate.domain.executor.impl.ThreadExecutor;
-import com.kodelabs.boilerplate.domain.interactors.AdsInteractor;
-import com.kodelabs.boilerplate.domain.interactors.impl.AdsInteractorImpl;
-import com.kodelabs.boilerplate.domain.repository.AdsRepository;
-import com.kodelabs.boilerplate.domain.repository.impl.GoogleAdsRepository;
-import com.kodelabs.boilerplate.threading.MainThreadImpl;
-
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import static org.junit.Assert.*;
 

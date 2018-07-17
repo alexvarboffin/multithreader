@@ -2,6 +2,9 @@ package com.kodelabs.boilerplate.domain.executor;
 
 import com.kodelabs.boilerplate.domain.interactors.base.AbstractInteractor;
 
+import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
+
 /**
  * This executor is responsible for running interactors on background threads.
  * <p/>
@@ -15,4 +18,8 @@ public interface Executor {
      * @param interactor The interactor to run.
      */
     void execute(final AbstractInteractor interactor);
+    //void terminate();
+
+    //Execute runnable
+    <T> Future<T> submit(Callable<T> runnable);
 }

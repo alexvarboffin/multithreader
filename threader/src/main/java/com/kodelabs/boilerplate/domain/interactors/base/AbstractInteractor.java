@@ -1,5 +1,7 @@
 package com.kodelabs.boilerplate.domain.interactors.base;
 
+import android.util.Log;
+
 import com.kodelabs.boilerplate.domain.executor.Executor;
 import com.kodelabs.boilerplate.domain.executor.MainThread;
 
@@ -16,6 +18,8 @@ import com.kodelabs.boilerplate.domain.executor.MainThread;
 public abstract class AbstractInteractor
         implements Interactor {
 
+
+    private static final String TAG = "@@@";
 
     protected Executor   mThreadExecutor;
     protected MainThread mMainThread;
@@ -51,13 +55,12 @@ public abstract class AbstractInteractor
         mIsCanceled = false;
     }
 
+    @Override
     public void execute() {
-
-        // mark this interactor as running
+        Log.i(TAG, "[execute]: mark this interactor as running");
         this.mIsRunning = true;
 
         // start running this interactor in a background thread
         mThreadExecutor.execute(this);
     }
-
 }
