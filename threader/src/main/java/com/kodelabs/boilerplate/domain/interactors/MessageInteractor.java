@@ -2,7 +2,7 @@ package com.kodelabs.boilerplate.domain.interactors;
 
 import com.kodelabs.boilerplate.domain.interactors.base.Interactor;
 
-public interface AdsInteractor extends Interactor {
+public interface MessageInteractor extends Interactor {
 
     //Отстyk в главный тред
     interface Callback {

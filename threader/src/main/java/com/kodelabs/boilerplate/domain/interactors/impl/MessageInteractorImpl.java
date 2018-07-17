@@ -2,24 +2,23 @@ package com.kodelabs.boilerplate.domain.interactors.impl;
 
 import com.kodelabs.boilerplate.domain.executor.Executor;
 import com.kodelabs.boilerplate.domain.executor.MainThread;
-import com.kodelabs.boilerplate.domain.interactors.AdsInteractor;
+import com.kodelabs.boilerplate.domain.interactors.MessageInteractor;
 import com.kodelabs.boilerplate.domain.interactors.base.AbstractInteractor;
 
 import com.kodelabs.boilerplate.domain.repository.MessageRepository;
-import com.kodelabs.boilerplate.domain.repository.Repository;
 
 /**
  * AbstractInteractor
  * запустит все в фоновом потоке...
  */
 
-public class AdsInteractorImpl extends AbstractInteractor implements AdsInteractor{
+public class MessageInteractorImpl extends AbstractInteractor implements MessageInteractor {
 
     private final Callback mCallback;
     private final MessageRepository mMessageRepository;
 
-    public AdsInteractorImpl(Executor threadExecutor, MainThread mainThread,
-                             AdsInteractor.Callback callback, MessageRepository repository) {
+    public MessageInteractorImpl(Executor threadExecutor, MainThread mainThread,
+                                 MessageInteractor.Callback callback, MessageRepository repository) {
         super(threadExecutor, mainThread);
         this.mCallback = callback;
         this.mMessageRepository = repository;

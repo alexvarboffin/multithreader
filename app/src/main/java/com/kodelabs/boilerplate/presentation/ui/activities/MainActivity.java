@@ -1,20 +1,25 @@
 package com.kodelabs.boilerplate.presentation.ui.activities;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.kodelabs.boilerplate.R;
 import com.kodelabs.boilerplate.domain.executor.impl.BackgroundExecutor;
 import com.kodelabs.boilerplate.domain.repository.impl.SimpleMessageRepository;
+import com.kodelabs.boilerplate.domain.repository.impl.ViewAdmobRepository;
 import com.kodelabs.boilerplate.presentation.presenters.MainPresenter;
 import com.kodelabs.boilerplate.presentation.presenters.impl.MainPresenterImpl;
 import com.kodelabs.boilerplate.threading.MainThreadImpl;
 
 public class MainActivity
-        extends AppCompatActivity implements MainPresenter.View {
+        extends AppCompatActivity implements MainPresenter.MainView {
 
 
     private static final String TAG = "@@@";
@@ -39,12 +44,23 @@ public class MainActivity
 
                 MainThreadImpl.getInstance(),
                 this,
-                SimpleMessageRepository.getInstance()
+                SimpleMessageRepository.getInstance(),
+                ViewAdmobRepository.getInstance()
         );
 
 
         mWelcomeTextView = findViewById(android.R.id.text1);
         findViewById(R.id.btn1).setOnClickListener(v -> mMainPresenter.runWork());
+
+
+
+        FrameLayout frameLayout = findViewById(R.id.banner_container);
+        Button message=new Button(this);
+        message.setText("000000000000000000000000000000000");
+        frameLayout.addView(message);
+
+
+        mMainPresenter.attachView(frameLayout);
     }
 
     //RotateScreen
@@ -107,6 +123,13 @@ public class MainActivity
             Log.i(TAG, "displayWelcomeMessage: >>" + this.hashCode());
         }
     }
+
+    @Override
+    public void displayViewMessage(@NonNull View message) {
+        FrameLayout frameLayout = findViewById(R.id.banner_container);
+        frameLayout.addView(message);
+    }
+
 
     @Override
     public void showProgress() {

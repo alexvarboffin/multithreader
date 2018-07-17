@@ -26,7 +26,7 @@ public class ExampleUnitTest {
 //        when(mMessageRepository.getWelcomeMessage())
 //                .thenReturn(msg);
 //
-//        AdsInteractor interactor = new AdsInteractorImpl(
+//        MessageInteractor interactor = new MessageInteractorImpl(
 //                mExecutor,
 //                mMainThread,
 //                mMockedCallback,
