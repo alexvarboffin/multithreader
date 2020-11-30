@@ -1,19 +1,24 @@
 package com.kodelabs.boilerplate.presentation.presenters.impl;
 
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
 import com.kodelabs.boilerplate.domain.executor.Executor;
 import com.kodelabs.boilerplate.domain.executor.MainThread;
 import com.kodelabs.boilerplate.domain.interactors.MessageInteractor;
 import com.kodelabs.boilerplate.domain.interactors.UserInteractor;
-import com.kodelabs.boilerplate.domain.interactors.ViewInteractor;
-import com.kodelabs.boilerplate.domain.interactors.impl.ViewInteractorImpl;
+import com.kodelabs.boilerplate.domain.interactors.impl.MessageInteractorImpl;
+import com.kodelabs.boilerplate.domain.interactors.impl.UserInteractorImpl;
+import com.kodelabs.boilerplate.domain.model.UserModel;
 import com.kodelabs.boilerplate.domain.repository.MessageRepository;
-import com.kodelabs.boilerplate.domain.repository.impl.ViewAdmobRepository;
+import com.kodelabs.boilerplate.domain.repository.impl.UserRepository;
 import com.kodelabs.boilerplate.presentation.presenters.MainPresenter;
 import com.kodelabs.boilerplate.presentation.presenters.base.AbstractPresenter;
+
+import nl.walhalla.domain.interactors.AdvertInteractor;
+import nl.walhalla.domain.interactors.impl.AdvertInteractorImpl;
+import nl.walhalla.domain.repository.AdvertRepository;
 
 /**
  * Created by dmilicic on 12/13/15.
@@ -26,41 +31,78 @@ public class MainPresenterImpl extends AbstractPresenter
 
     private MessageInteractor interactor;
     private UserInteractor mUserInteractor;
-    private ViewAdmobRepository mViewAdmobRepository;
 
+    private UserRepository mUserRepository;
+    private AdvertRepository mAdvertAdmobRepository;
 
     private final MessageRepository mRepository;
     private long startTime = System.currentTimeMillis();
     private MainView mView;
     private Thread mThread;
 
-    public MainPresenterImpl(Executor executor, MainThread mainThread,
-                             MainView view,
+
+    public MainPresenterImpl(Executor executor, MainThread mainThread, MainView view,
 
                              MessageRepository messageRepository,
-                             ViewAdmobRepository viewAdmobRepository
+                             AdvertRepository admobRepository,
+                             UserRepository userRepository
                              //...and other
     ) {
         super(executor, mainThread);
         mView = view;
         mRepository = messageRepository;
-        mViewAdmobRepository = viewAdmobRepository;
+        mAdvertAdmobRepository = admobRepository;
+        mUserRepository = userRepository;
     }
+
+
+    /**
+     * Inject adblock
+     *
+     * @param frameLayout
+     */
+
 
     @Override
     public void attachView(ViewGroup frameLayout) {
 
-        ViewInteractor viewInteractor = new ViewInteractorImpl(
+        AdvertInteractor advertInteractor = new AdvertInteractorImpl(
                 mExecutor,
                 mMainThread,
-                mViewAdmobRepository
+                mAdvertAdmobRepository
         );
 
-
-        viewInteractor.selectView(frameLayout, new ViewInteractor.Callback<View>() {
+        advertInteractor.selectView(frameLayout, new AdvertInteractor.Callback<View>() {
             @Override
-            public void onMessageRetrieved(View message) {
-                mView.displayViewMessage(message);
+            public void onMessageRetrieved(int id, View message) {
+                if (mView != null) {
+                    mView.displayAdvertBanner(message);
+                }
+            }
+
+            @Override
+            public void onRetrievalFailed(String error) {
+                mView.showError(error);
+            }
+        });
+        //advertInteractor.execute();
+    }
+
+    @Override
+    public void runWork() {
+
+        mUserInteractor = new UserInteractorImpl(
+                mExecutor,
+                mMainThread,
+                new UserRepository()
+        );
+
+        mUserInteractor.getUserById((long) 77, new UserInteractor.Callback<UserModel>() {
+            @Override
+            public void onMessageRetrieved(UserModel message) {
+                if (mView != null) {
+                    mView.displayWelcomeMessage(message.toString());
+                }
             }
 
             @Override
@@ -68,57 +110,32 @@ public class MainPresenterImpl extends AbstractPresenter
 
             }
         });
-    }
-
-    @Override
-    public void runWork() {
-
-
-//        mUserInteractor = new UserInteractorImpl(
-//                mExecutor,
-//                mMainThread,
-//                new UserRepository()
-//        );
-//
-//        mUserInteractor.getUserById((long) 77, new UserInteractor.Callback<UserModel>() {
-//            @Override
-//            public void onMessageRetrieved(UserModel message) {
-//                if (mView != null) {
-//                    mView.displayWelcomeMessage(message.toString());
-//                }
-//            }
-//
-//            @Override
-//            public void onRetrievalFailed(String error) {
-//
-//            }
-//        });
-
 
 
         //====================================================================
 
-//        interactor = new MessageInteractorImpl(
-//                mExecutor,
-//                mMainThread,
-//                new MessageInteractor.Callback() {
-//                    @Override
-//                    public void onMessageRetrieved(String message) {
-//                        if (mView != null) {
-//                            mView.displayWelcomeMessage(message);
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onRetrievalFailed(String error) {
-//                        Log.i(TAG, "onRetrievalFailed: " + error);
-//                    }
-//                },
-//                mRepository
-//        );
-//
-//        // запускаем interactor
-//        interactor.execute();
+        interactor = new MessageInteractorImpl(
+                mExecutor,
+                mMainThread,
+                new MessageInteractor.Callback() {
+                    @Override
+                    public void onMessageRetrieved(String message) {
+                        if (mView != null) {
+                            mView.displayWelcomeMessage(message);
+                        }
+                    }
+
+                    @Override
+                    public void onRetrievalFailed(String error) {
+                        Log.i(TAG, "onRetrievalFailed: " + error);
+                    }
+                },
+                mRepository
+        );
+
+        // запускаем interactor
+        //interactor.execute();
+        interactor.extractById(511);
 
         for (int i = 0; i < 100; i++) {
 

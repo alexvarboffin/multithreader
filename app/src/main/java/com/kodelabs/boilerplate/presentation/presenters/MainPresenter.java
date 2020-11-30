@@ -13,7 +13,9 @@ public interface MainPresenter extends BasePresenter {
     interface MainView extends BaseView {
         void displayWelcomeMessage(String message);
 
-        void displayViewMessage(View message);
+        //void displayViewMessage(View message);
+
+        void displayAdvertBanner(View message);
     }
 
     void attachView(ViewGroup frameLayout);
