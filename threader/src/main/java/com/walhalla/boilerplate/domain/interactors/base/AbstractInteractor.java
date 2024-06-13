@@ -16,9 +16,6 @@ import com.walhalla.boilerplate.domain.executor.MainThread;
 public abstract class AbstractInteractor
         implements Interactor {
 
-
-    private static final String TAG = "@@@";
-
     protected Executor   mThreadExecutor;
     protected MainThread mMainThread;
 
@@ -53,7 +50,7 @@ public abstract class AbstractInteractor
         mIsCanceled = false;
     }
 
-//    //@Override
+//    @Override
 //    private void execute() {
 //        Log.i(TAG, "[execute]: mark this interactor as running");
 //        this.mIsRunning = true;

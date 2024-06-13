@@ -1,1 +1,1 @@
--repackageclasses ''
+-include "consumer-rules.pro"

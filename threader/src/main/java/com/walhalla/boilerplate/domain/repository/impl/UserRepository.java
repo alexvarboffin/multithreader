@@ -15,12 +15,16 @@ public class UserRepository implements CrudRepository<UserModel>{
         String msg = "Insert success: " + seconds; // let's be friendly
 
         // давайте симулируем некоторые сетевые/БД лаги
+        sleep0();
+        return true;
+    }
+
+    private void sleep0() {
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            //DLog.handleException(e);
         }
-        return true;
     }
 
     @Override
@@ -29,11 +33,7 @@ public class UserRepository implements CrudRepository<UserModel>{
         String msg = "update success: " + seconds; // let's be friendly
 
         // давайте симулируем некоторые сетевые/БД лаги
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        sleep0();
         return true;
     }
 
@@ -44,11 +44,7 @@ public class UserRepository implements CrudRepository<UserModel>{
 
     @Override
     public boolean delete(UserModel model) {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        sleep0();
         return true;
     }
 

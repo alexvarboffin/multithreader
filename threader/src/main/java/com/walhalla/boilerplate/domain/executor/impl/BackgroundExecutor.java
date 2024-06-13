@@ -11,8 +11,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-public class BackgroundExecutor
-        implements Executor {
+public class BackgroundExecutor implements Executor {
 
     private static final String TAG = "@@@";
 
@@ -27,19 +26,18 @@ public class BackgroundExecutor
         return INSTANCE;
     }
 
-    private static int CORE_POOL_SIZE = Runtime.getRuntime().availableProcessors();
-
-    private ExecutorService var0;
+    private static final int CORE_POOL_SIZE = Runtime.getRuntime().availableProcessors();
+    private final ExecutorService mExecutorService;
 
     private BackgroundExecutor() {
-        this.var0 = Executors.newFixedThreadPool(CORE_POOL_SIZE);
+        this.mExecutorService = Executors.newFixedThreadPool(CORE_POOL_SIZE);
         Log.d(TAG,  "MyThreadExecutor: pool-zize -> " + CORE_POOL_SIZE + " -> "
-                + var0.hashCode());
+                + mExecutorService.hashCode());
     }
 
     @Override
     public void execute(final AbstractInteractor interactor) {
-        var0.submit(() -> {
+        mExecutorService.submit(() -> {
             // run the main logic
             interactor.run();
             interactor.onFinished();
@@ -66,24 +64,24 @@ public class BackgroundExecutor
 
     @Override
     public void terminate() {
-        var0.shutdownNow();
+        mExecutorService.shutdownNow();
         Log.d(TAG,  "terminate: ");
     }
 
 
     @Override
     public <T> Future<T> submit(Callable<T> runnable) {
-        return var0.submit(runnable);
+        return mExecutorService.submit(runnable);
     }
 
     @Override
     public Future<?> execute(Runnable runnable) {
-        return null;
+        return mExecutorService.submit(runnable);
     }
 
     @Override
     public void submit(Runnable runnable) {
-        var0.submit(runnable);
+        mExecutorService.submit(runnable);
     }
 
 

@@ -12,15 +12,10 @@ import com.walhalla.boilerplate.domain.repository.base.Repository;
  */
 public class SampleInteractorImpl extends AbstractInteractor implements SampleInteractor {
 
-    private SampleInteractor.Callback mCallback;
-    private Repository mRepository;
-
     public SampleInteractorImpl(Executor threadExecutor,
                                 MainThread mainThread,
                                 Callback callback, Repository repository) {
         super(threadExecutor, mainThread);
-        mCallback = callback;
-        mRepository = repository;
     }
 
     @Override

@@ -35,7 +35,7 @@ public class SimpleMessageRepository
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            //DLog.handleException(e);
         }
 
         return msg;
@@ -50,7 +50,7 @@ public class SimpleMessageRepository
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            //DLog.handleException(e);
         }
 
         return msg;

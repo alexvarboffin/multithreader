@@ -13,12 +13,20 @@ import java.util.concurrent.Future;
 public class SingleThreadExecutor implements Executor {
 
     private static final String TAG = "@@@@";
-    private static volatile ExecutorService mExecutorService = Executors.newSingleThreadExecutor();
+    private static final ExecutorService mExecutorService = Executors.newSingleThreadExecutor();
 
+    private static volatile SingleThreadExecutor INSTANCE;
+
+    public static SingleThreadExecutor getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new SingleThreadExecutor();
+        }
+        return INSTANCE;
+    }
 
     @Override
     public void execute(AbstractInteractor interactor) {
-
+       // mExecutorService.execute(interactor);
     }
 
     @Override
@@ -41,7 +49,7 @@ public class SingleThreadExecutor implements Executor {
         try {
             mExecutorService.submit(runnable);
         } catch (Exception e) {
-            Log.d(TAG, "submit: " + e.toString());
+            Log.d(TAG, "submit: " + e);
         }
     }
 }

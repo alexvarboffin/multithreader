@@ -9,7 +9,7 @@ public class MainThreadImpl implements MainThread {
 
     private static MainThread sThread;
 
-    private Handler mHandler;
+    private final Handler mHandler;
 
     public MainThreadImpl() {
         mHandler = new Handler(Looper.getMainLooper());

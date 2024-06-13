@@ -19,6 +19,7 @@ public interface Executor {
      */
 
     void execute(final AbstractInteractor interactor);
+
     void terminate();
 
     //Execute runnable
