@@ -8,8 +8,8 @@ android {
 
     namespace("com.walhalla.threader")
 
-    compileSdk 34
-    buildToolsVersion '34.0.0'
+    compileSdk 35
+    buildToolsVersion rootProject.buildToolsVersion0
 
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion0
@@ -30,8 +30,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 }
 
@@ -39,49 +39,46 @@ dependencies {
 //implementation project(path: ':features:ui')
 //implementation fileTree(dir: 'libs', include: ['*.jar'])
 //implementation 'androidx.appcompat:appcompat:1.2.0-alpha01'
-//    testImplementation 'junit:junit:4.13'
-//    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-//    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }
-afterEvaluate {
-
-    ///home/jitpack/build/toasty/build/outputs/aar/toasty-release.aar
-    println("@@@@ Configuring publishing tasks... @@@@")
-
-    publishing {
-        description 'Upload jars to local artifactory'
-        group 'publishing'
-        publications {
-            release(MavenPublication) {
-                if (project.plugins.findPlugin("com.android.library")) {
-                    from components.findByName('release')
-                } else {
-                    from components.findByName('java')
-                }
-                groupId = "com.walhalla.threader"
-                artifactId = 'threader-android-app'
-                version = versionName0
-                //artifact(sourcesJar)
-
-                //artifact("$buildDir/outputs/aar/toasty.aar")
-                //artifact("$buildDir/outputs/aar/toasty-production-release.aar")
-                if (buildDir.toString().startsWith("/home/jitpack/build/toasty/build")) {
-                    artifact("$buildDir/toasty-threader.aar")
-                } else {
-                    artifact("$buildDir/outputs/aar/threader-release.aar")
-                }
-                pom {
-                    description = 'First release'
-                }
-            }
-        }
-    }
-    repositories {
-        mavenLocal()
-    }
-}
-tasks.named('build').configure {
-    dependsOn tasks.named('publishToMavenLocal')
-}
-
-build.dependsOn publishToMavenLocal
+//afterEvaluate {
+//
+//    ///home/jitpack/build/toasty/build/outputs/aar/toasty-release.aar
+//    println("@@@@ Configuring publishing tasks... @@@@")
+//
+//    publishing {
+//        description 'Upload jars to local artifactory'
+//        group 'publishing'
+//        publications {
+//            release(MavenPublication) {
+//                if (project.plugins.findPlugin("com.android.library")) {
+//                    from components.findByName('release')
+//                } else {
+//                    from components.findByName('java')
+//                }
+//                groupId = "com.walhalla.threader"
+//                artifactId = 'threader-android-app'
+//                version = versionName0
+//                //artifact(sourcesJar)
+//
+//                //artifact("$buildDir/outputs/aar/toasty.aar")
+//                //artifact("$buildDir/outputs/aar/toasty-production-release.aar")
+//                if (buildDir.toString().startsWith("/home/jitpack/build/toasty/build")) {
+//                    artifact("$buildDir/toasty-threader.aar")
+//                } else {
+//                    artifact("$buildDir/outputs/aar/threader-release.aar")
+//                }
+//                pom {
+//                    description = 'First release'
+//                }
+//            }
+//        }
+//    }
+//    repositories {
+//        mavenLocal()
+//    }
+//}
+//tasks.named('build').configure {
+//    dependsOn tasks.named('publishToMavenLocal')
+//}
+//
+//build.dependsOn publishToMavenLocal
