@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
-    id("maven-publish")
     alias(libs.plugins.kotlin.android)
+    id("maven-publish")
     //kotlin("android") version "2.1.0"
 }
 
