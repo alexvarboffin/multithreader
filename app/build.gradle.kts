@@ -1,14 +1,17 @@
+plugins {
+    alias(libs.plugins.kotlin.android)
+}
 apply plugin: 'com.android.application'
 //apply from: "${project.rootDir}/QA/quality.gradle"
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion '29.0.2'
+    compileSdkVersion 35
+    buildToolsVersion '35.0.0'
 
     defaultConfig {
         applicationId "com.kodelabs.boilerplate.example"
         minSdkVersion 15
-        targetSdkVersion 29
+        targetSdkVersion 35
         versionCode 1
         versionName "1.0"
     }
@@ -22,22 +25,24 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     // general
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'com.google.android.material:material:1.2.0-alpha03'
+    implementation libs.androidx.appcompat
+    implementation libs.material
 
-    implementation('com.google.android.gms:play-services-ads:17.1.1') {
-        exclude group: 'com.android.support'
-    }
+    implementation(libs.play.services.ads)
 
     //implementation 'com.google.android.gms:play-services-ads:17.1.1'
-    implementation 'com.jakewharton.timber:timber:4.1.0'
+    implementation libs.timber
     // network
-    implementation 'com.squareup.retrofit2:retrofit:2.6.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.11.0'
+    implementation libs.core.ktx
     // tests
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-core:2.8.9'

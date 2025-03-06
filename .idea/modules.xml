@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/multithreader.iml" filepath="$PROJECT_DIR$/multithreader.iml" />
       <module fileurl="file://$PROJECT_DIR$/threader/threader.iml" filepath="$PROJECT_DIR$/threader/threader.iml" />
     </modules>
   </component>

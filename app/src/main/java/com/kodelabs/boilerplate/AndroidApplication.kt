@@ -1,16 +1,14 @@
-package com.kodelabs.boilerplate;
+package com.kodelabs.boilerplate
 
-import android.app.Application;
+import android.app.Application
+import timber.log.Timber
+import timber.log.Timber.DebugTree
 
-import timber.log.Timber;
-import timber.log.Timber.DebugTree;
-
-public class AndroidApplication extends Application {
-    @Override
-    public void onCreate() {
-        super.onCreate();
+class AndroidApplication : Application() {
+    override fun onCreate() {
+        super.onCreate()
 
         // initiate Timber
-        Timber.plant(new DebugTree());
+        Timber.plant(DebugTree())
     }
 }
