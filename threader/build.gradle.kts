@@ -13,12 +13,12 @@ android {
 
     namespace = "com.walhalla.threader"
 
-    compileSdk = 35
-    buildToolsVersion = rootProject.extra["buildToolsVersion0"].toString()
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
+    buildToolsVersion = libs.versions.android.buildTools.get()
 
     defaultConfig {
-        minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = libs.versions.targetSdk.get().toInt()
+        minSdk = libs.versions.android.minSdk.get().toInt()
+        targetSdk = libs.versions.android.targetSdk.get().toInt()
 //        versionCode = versionCode0
 //        versionName = versionName0
     }
