@@ -1,83 +1,84 @@
-package com.walhalla.boilerplate.domain.executor.impl;
+package com.walhalla.boilerplate.domain.executor.impl
 
-import com.walhalla.boilerplate.domain.executor.Executor;
-import com.walhalla.boilerplate.domain.interactors.base.AbstractInteractor;
-
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Callable;
-import java.util.concurrent.Future;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import com.walhalla.boilerplate.domain.executor.Executor
+import com.walhalla.boilerplate.domain.interactors.base.AbstractInteractor
+import java.util.concurrent.BlockingQueue
+import java.util.concurrent.Callable
+import java.util.concurrent.Future
+import java.util.concurrent.LinkedBlockingQueue
+import java.util.concurrent.ThreadPoolExecutor
+import java.util.concurrent.TimeUnit
 
 /**
  * This singleton class will make sure that each interactor operation gets a background thread.
- * <p/>
- * <p>
+ *
+ *
+ *
+ *
  * android 4.4 not work !!!!!!!!!
  */
-public class ThreadExecutor implements Executor {
+class ThreadExecutor : Executor {
+    private val var0: ThreadPoolExecutor
 
-    // This is a singleton
-    private static volatile ThreadExecutor sThreadExecutor;
-
-    private static final int CORE_POOL_SIZE = 3;
-    private static final int MAX_POOL_SIZE = 5;
-    private static final int KEEP_ALIVE_TIME = 120;
-    private static final TimeUnit TIME_UNIT = TimeUnit.SECONDS;
-    private static final BlockingQueue<Runnable> WORK_QUEUE = new LinkedBlockingQueue<>();
-
-    private ThreadPoolExecutor var0;
-
-    public ThreadExecutor() {
-
-        var0 = new ThreadPoolExecutor(
-                CORE_POOL_SIZE,
-                MAX_POOL_SIZE,
-                KEEP_ALIVE_TIME,
-                TIME_UNIT,
-                WORK_QUEUE);
+    init {
+        var0 = ThreadPoolExecutor(
+            CORE_POOL_SIZE,
+            MAX_POOL_SIZE,
+            KEEP_ALIVE_TIME.toLong(),
+            TIME_UNIT,
+            WORK_QUEUE
+        )
     }
 
-    @Override
-    public void execute(final AbstractInteractor interactor) {
-        var0.submit(() -> {
+    override fun execute(interactor: AbstractInteractor) {
+        var0.submit(Runnable {
             // run the main logic
-            interactor.run();
+            interactor.run()
 
             // mark it as finished
-            interactor.onFinished();
-        });
+            interactor.onFinished()
+        })
     }
 
-    public Future<?> execute(Runnable runnable) {
-        return var0.submit(runnable);
+    override fun execute(runnable: Runnable?): Future<*>? {
+        return var0.submit(runnable)
     }
 
-    @Override
-    public void submit(Runnable runnable) {
-        var0.submit(runnable);
+    override fun submit(runnable: Runnable?) {
+        var0.submit(runnable)
     }
 
 
-    @Override
-    public void terminate() {
-        var0.shutdownNow();
+    override fun terminate() {
+        var0.shutdownNow()
     }
 
-    @Override
-    public <T> Future<T> submit(Callable<T> runnable) {
-        return var0.submit(runnable);
+    override fun <T> submit(runnable: Callable<T?>?): Future<T?>? {
+        return var0.submit<T?>(runnable)
     }
 
-    /**
-     * Returns a singleton instance of this executor. If the executor is not initialized then it initializes it and returns
-     * the instance.
-     */
-    public static Executor getInstance() {
-        if (sThreadExecutor == null) {
-            sThreadExecutor = new ThreadExecutor();
-        }
-        return sThreadExecutor;
+    companion object {
+        // This is a singleton
+        @Volatile
+        private var sThreadExecutor: ThreadExecutor? = null
+
+        private const val CORE_POOL_SIZE = 3
+        private const val MAX_POOL_SIZE = 5
+        private const val KEEP_ALIVE_TIME = 120
+        private val TIME_UNIT = TimeUnit.SECONDS
+        private val WORK_QUEUE: BlockingQueue<Runnable?> = LinkedBlockingQueue<Runnable?>()
+
+        @JvmStatic
+        val instance: Executor?
+            /**
+             * Returns a singleton instance of this executor. If the executor is not initialized then it initializes it and returns
+             * the instance.
+             */
+            get() {
+                if (sThreadExecutor == null) {
+                    sThreadExecutor = ThreadExecutor()
+                }
+                return sThreadExecutor
+            }
     }
 }
