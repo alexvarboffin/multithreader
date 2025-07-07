@@ -10,9 +10,7 @@ val versionName0 = "1.5.2"
 
 android {
 
-
     namespace = "com.walhalla.threader"
-
     compileSdk = libs.versions.android.compileSdk.get().toInt()
     buildToolsVersion = libs.versions.android.buildTools.get()
 
