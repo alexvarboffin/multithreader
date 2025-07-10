@@ -16,7 +16,7 @@ import com.walhalla.boilerplate.domain.executor.MainThread
  * but the request will come from the UI thread unless the request was specifically assigned to a background thread.
  */
 abstract class AbstractInteractor
-    (@JvmField protected var mThreadExecutor: Executor?, @JvmField protected var mMainThread: MainThread?) :
+    (@JvmField protected var mThreadExecutor: Executor, @JvmField protected var mMainThread: MainThread) :
     Interactor {
     @Volatile
     protected var mIsCanceled: Boolean = false
