@@ -69,7 +69,7 @@ class ThreadExecutor : Executor {
         private val WORK_QUEUE: BlockingQueue<Runnable?> = LinkedBlockingQueue<Runnable?>()
 
         @JvmStatic
-        val instance: Executor?
+        val instance: Executor
             /**
              * Returns a singleton instance of this executor. If the executor is not initialized then it initializes it and returns
              * the instance.
@@ -78,7 +78,7 @@ class ThreadExecutor : Executor {
                 if (sThreadExecutor == null) {
                     sThreadExecutor = ThreadExecutor()
                 }
-                return sThreadExecutor
+                return sThreadExecutor!!
             }
     }
 }
