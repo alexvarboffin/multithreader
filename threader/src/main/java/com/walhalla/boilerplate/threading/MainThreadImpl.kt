@@ -1,30 +1,27 @@
-package com.walhalla.boilerplate.threading;
+package com.walhalla.boilerplate.threading
 
-import android.os.Handler;
-import android.os.Looper;
+import android.os.Handler
+import android.os.Looper
+import com.walhalla.boilerplate.domain.executor.MainThread
 
-import com.walhalla.boilerplate.domain.executor.MainThread;
+class MainThreadImpl : MainThread {
 
-public class MainThreadImpl implements MainThread {
+    private val mHandler: Handler = Handler(Looper.getMainLooper())
 
-    private static MainThread sThread;
-
-    private final Handler mHandler;
-
-    public MainThreadImpl() {
-        mHandler = new Handler(Looper.getMainLooper());
+    override fun post(runnable: Runnable) {
+        mHandler.post(runnable)
     }
 
-    @Override
-    public void post(Runnable runnable) {
-        mHandler.post(runnable);
-    }
+    companion object {
+        private var sThread: MainThread? = null
 
-    public static MainThread getInstance() {
-        if (sThread == null) {
-            sThread = new MainThreadImpl();
-        }
-
-        return sThread;
+        @JvmStatic
+        val instance: MainThread
+            get() {
+                if (sThread == null) {
+                    sThread = MainThreadImpl()
+                }
+                return sThread!!
+            }
     }
 }
