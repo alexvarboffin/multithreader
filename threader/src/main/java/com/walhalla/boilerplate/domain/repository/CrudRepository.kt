@@ -1,21 +1,18 @@
-package com.walhalla.boilerplate.domain.repository;
+package com.walhalla.boilerplate.domain.repository
 
-import com.walhalla.boilerplate.domain.repository.base.Repository;
-
-import java.util.List;
+import com.walhalla.boilerplate.domain.repository.base.Repository
 
 /**
  * A sample repository with CRUD operations on a model.
  */
-public interface CrudRepository<T> extends Repository {
+interface CrudRepository<T> : Repository {
+    fun insert(model: T): Boolean
 
-    boolean insert(T model);
+    fun update(model: T): Boolean
 
-    boolean update(T model);
+    fun get(id: Long): T?
 
-    T get(long id);
+    fun delete(model: T): Boolean
 
-    boolean delete(T model);
-
-    List<T> query();
+    fun query(): MutableList<T>?
 }
